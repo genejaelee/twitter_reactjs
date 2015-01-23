@@ -20,11 +20,18 @@
   width: 100%;
   text-align: center;
   
+  .loading-show {
+    width: 80px;
+    opacity: 1;
+  }
+  
   .loading-hide {
+    width: 20px;
     opacity: 0;
   }
   
   #loading {
+    -webkit-transition: width 0.5s;
     text-align: center;
     margin: auto;
     width: 40px;
@@ -40,7 +47,9 @@
     text-align: center;
     width: 100%;
     .userSearch {
-      font-size: 22px;
+      font-size: 16px;
+      color: #828282;
+      padding: 5px;
       margin: auto;
       text-align: center;
     }

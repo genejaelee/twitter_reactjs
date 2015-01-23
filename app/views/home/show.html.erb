@@ -15,13 +15,13 @@
     }
     
     showLoadingAni = function(){
-      document.getElementById('loading').className -= "loading-hide";
+      document.getElementById('loading').className = "loading-show";
     }
     
     var UserSearch = React.createClass({
       getInitialState: function() {
         return {
-          value: 'genejaelee',
+          value: 'bhorowitz',
           data: {}
         };
       },
