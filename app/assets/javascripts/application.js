@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require JSXTransformer
 //= require react.min
 //= require react_ujs
 //= require components
-//= require JSXTransformer
 //= require_tree .
