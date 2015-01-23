@@ -68,10 +68,13 @@
     var TweetsList = React.createClass({
       render: function(){
         var tweetNodes = this.props.data.map(function (tweet){
+          var has_reply = false
+          if (tweet.in_reply_to_status_id) has_reply = true;
           return (
             <Tweet 
               key={tweet.id}
               tweet={tweet}
+              has_reply={has_reply}
             />
           );
         });
@@ -107,8 +110,15 @@
         var date = tweet.created_at
         var formatted_date = new Date(Date.parse(date)).toLocaleString()
         var reply_id = tweet.in_reply_to_status_id;
+        var parents = this.state.parents
+        var has_reply = this.props.has_reply;
+        setClass = function(parents){
+          if (has_reply) { return (" active tweet") }
+          else { return (" tweet") };
+        }
+        var thisClass = setClass(parents);
         return (
-          <div className="tweet" onClick={this.handleClick}>
+          <div className={thisClass} onClick={this.handleClick}>
             <div className="tweetHeader">
               <div className="headerElement headerAuthor">{user.name}</div>
               <div className="headerElement headerDate">{formatted_date}</div>
