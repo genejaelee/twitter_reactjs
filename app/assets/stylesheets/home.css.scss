@@ -6,6 +6,15 @@
   font-family: 'Helvetica-Neue', 'Helvetica', 'Arial';
 }
 
+// animations
+.fadein-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+.fadein-enter.fadein-enter-active {
+  opacity: 1;
+}
+
 #content {
   margin: auto;
   max-width: 800px;

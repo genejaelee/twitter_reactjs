@@ -32,7 +32,6 @@
             type: 'POST',
             data: { 'username' : username },
             success: function(data){
-              console.log('success ' + JSON.stringify(data) + ' and length is ' + data.length);
               this.setState({data: data});
             }.bind(this),
               error: function(xhr, status, err) {
@@ -98,7 +97,6 @@
               'parent_tweet_id' : parent_tweet_id,
             },
             success: function(data){
-              console.log('success getting parent tweets ' + data.tweets);
               this.setState({parents: data.tweets});
             }.bind(this),
               error: function(xhr, status, err) {
@@ -130,8 +128,6 @@
     var TweetParentsList = React.createClass({
       render: function(){
         var parents = this.props.replies
-        console.log('parents');
-        console.log(parents);
         if (parents.length > 0) {
           var tweetParentsNodes = parents.map(function (parent){
             return (
