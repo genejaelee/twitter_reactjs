@@ -1,12 +1,22 @@
 <%= render 'layouts/header' %>
-
-
+  
+  <div id="loadingContainer">
+    <%= image_tag("loading.gif", :alt => "Loading", :id => "loading", :class => "loading-hide") %>
+  </div>
   <!-- render tweets here -->
   <div id="content">
   </div>
   
   <script type="text/jsx">
     console.log('loading script');
+    
+    hideLoadingAni = function(){
+      document.getElementById('loading').className = "loading-hide";
+    }
+    
+    showLoadingAni = function(){
+      document.getElementById('loading').className -= "loading-hide";
+    }
     
     var UserSearch = React.createClass({
       getInitialState: function() {
@@ -173,5 +183,39 @@
       <UserSearch url="/api/get_user" />,
       document.getElementById('content')
     )
+    
+    // HTTP request functions
+    function getUsers(url, json, callback){
+      showLoadingAni();
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'POST',
+        data: json,
+        success: function(data){
+          callback(data);
+          hideLoadingAni();
+        }
+      });
+    }
+
+    function getParents(url, id, callback) {
+      showLoadingAni();
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'POST',
+        data: { 
+          'parent_tweet_id' : id,
+        },
+        success: function(data){
+          hideLoadingAni();
+          callback(data);
+        }.bind(this),
+          error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
+    }
     
   </script>

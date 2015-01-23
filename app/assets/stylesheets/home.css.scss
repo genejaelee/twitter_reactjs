@@ -15,6 +15,22 @@
   opacity: 1;
 }
 
+// ui elements
+#loadingContainer {
+  width: 100%;
+  text-align: center;
+  
+  .loading-hide {
+    opacity: 0;
+  }
+  
+  #loading {
+    text-align: center;
+    margin: auto;
+    width: 40px;
+  }
+}
+
 #content {
   margin: auto;
   max-width: 800px;
