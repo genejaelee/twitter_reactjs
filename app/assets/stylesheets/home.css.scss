@@ -11,6 +11,7 @@
   max-width: 800px;
   
   .searchContainer {
+    margin-bottom: 30px;
     text-align: center;
     width: 100%;
     .userSearch {
@@ -50,6 +51,8 @@
         }
         
         .tweetParents {
+          margin-top: 5px;
+          background-color: #eee;
           padding: 20px;
           font-size: 14px;
           

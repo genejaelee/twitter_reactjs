@@ -1,0 +1,88 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+
+
+ */
+
+/* line 1, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/header.css.scss */
+.header {
+  width: 100%;
+  height: 150px;
+}
+/* line 5, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/header.css.scss */
+.header h1 {
+  text-align: center;
+  color: #525252;
+  font-size: 40px;
+  margin-top: 50px;
+  font-weight: 200;
+}
+/* line 5, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+* {
+  font-family: 'Helvetica-Neue', 'Helvetica', 'Arial';
+}
+
+/* line 9, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content {
+  margin: auto;
+  max-width: 800px;
+}
+/* line 13, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .searchContainer {
+  margin-bottom: 30px;
+  text-align: center;
+  width: 100%;
+}
+/* line 17, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .searchContainer .userSearch {
+  font-size: 22px;
+  margin: auto;
+  text-align: center;
+}
+/* line 29, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .tweetsContainer .tweetsList .tweet {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+/* line 34, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .tweetsContainer .tweetsList .tweet .tweetHeader .headerElement {
+  margin-right: 10px;
+  display: inline-block;
+}
+/* line 39, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .tweetsContainer .tweetsList .tweet .tweetHeader .headerAuthor {
+  font-weight: 600;
+  color: #525252;
+}
+/* line 44, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .tweetsContainer .tweetsList .tweet .tweetHeader .headerDate {
+  font-size: 12px;
+}
+/* line 49, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .tweetsContainer .tweetsList .tweet .tweetBody {
+  padding: 5px 10px;
+}
+/* line 53, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .tweetsContainer .tweetsList .tweet .tweetParents {
+  margin-top: 5px;
+  background-color: #eee;
+  padding: 20px;
+  font-size: 14px;
+}
+/* line 59, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .tweetsContainer .tweetsList .tweet .tweetParents .tweetParent {
+  margin-bottom: 10px;
+}
+/* line 64, /Users/jaelee/Projects/rails_projects/twitter_app/app/assets/stylesheets/home.css.scss */
+#content .tweetsContainer .tweetsList .tweet:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
