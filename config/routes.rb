@@ -1,10 +1,13 @@
 TwitterApp::Application.routes.draw do
-  get 'auth/:provider/callback', to: 'sessions#create'
-  get 'auth/failure', to: redirect('/')
-  
-  get 'signout', to: 'sessions#destroy', as: 'signout'
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
+  
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'sessions#destroy', as: 'signout'
+  
+  post 'api/get_user', to: 'api#get_user'
+  post 'api/get_parents', to: 'api#get_parents'
   
   root 'home#show'
   # The priority is based upon order of creation: first created -> highest priority.

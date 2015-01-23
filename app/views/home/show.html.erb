@@ -1,5 +1,201 @@
 <% if !current_user.nil? %>
   <!-- render tweets here -->
+  
+  <div id="searchContainer">
+  </div>
+  <div id="content">
+  </div>
+  
+  <script type="text/jsx">
+    console.log('loading script');
+    
+    var UserSearch = React.createClass({
+      getInitialState: function() {
+        return {
+          value: 'mattkrisiloff',
+          data: {}
+        };
+      },
+      
+      handleChange: function(e) {
+        this.setState({
+          value: e.target.value
+        });
+      },
+      
+      handleEnter: function(e) {
+        if (e.which == 13) {
+          var username = e.target.value;
+          var url = this.props.url;
+          $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'POST',
+            data: { 'username' : username },
+            success: function(data){
+              console.log('success ' + JSON.stringify(data) + ' and length is ' + data.length);
+              this.setState({data: data});
+            }.bind(this),
+              error: function(xhr, status, err) {
+              console.error(this.props.url, status, err.toString());
+            }.bind(this)
+          });
+        }
+      },
+      
+      render: function(){
+        var value = this.state.value;
+        var data = this.state.data;
+        return(
+          <div>
+            <input 
+              className="userSearch"
+              value={value}
+              onKeyDown={this.handleEnter}
+              onChange={this.handleChange}
+            />
+            <TweetsContainer data={data} />
+          </div>
+        );
+      }
+    });
+    
+    var Tweet = React.createClass({
+      getInitialState: function() {
+        return {
+          parent: null
+        };
+      },
+      
+      handleClick: function(e) {
+        var parent_tweet_id = this.props.tweet.in_reply_to_status_id_str;
+        var url = "api/get_parents"
+        if (parent_tweet_id) {
+          $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'POST',
+            data: { 
+              'parent_tweet_id' : parent_tweet_id,
+            },
+            success: function(data){
+              console.log('success getting parent tweets ' + data);
+              this.setState({parents: data});
+            }.bind(this),
+              error: function(xhr, status, err) {
+              console.error(this.props.url, status, err.toString());
+            }.bind(this)
+          });
+        }
+      },
+      
+      render: function(){
+        var user = this.props.tweet.user
+        var tweet = this.props.tweet
+        var reply_id = tweet.in_reply_to_status_id;
+        return (
+          <div className="tweet" onClick={this.handleClick}>
+            <div className="tweetHeader">
+              <div className="headerAuthor">{user.name}</div>
+              <div className="headerDate">{tweet.created_at}</div>
+            </div>
+            <div className="tweetBody">{tweet.text}</div>
+            <TweetParentsList replies={this.state.parents} />
+          </div>
+        );
+      }
+    });
+    
+    var TweetParentsList = React.createClass({
+      render: function(){
+        var parents = this.props.replies
+        console.log('parents');
+        console.log(parents);
+        if (parents.length > 0) {
+          var tweetParentsNodes = parents.map(function (parent){
+            return (
+              <TweetParent
+                tweet={parent.tweet}
+                author={parent.user}
+              />
+            )
+          });
+          return (
+            <div className="tweetParents">
+              <TweetParent
+                tweet={parent.tweet}
+                author={parent.user}
+              />
+            </div>
+          );
+        } else {
+          console.log('still no parents');
+          return (
+            <div>"no parents"</div>
+          )
+        }
+      }
+    });
+    
+    var TweetParent = React.createClass({
+      render: function(){
+        var user = this.props.author
+        var tweet = this.props.tweet
+        console.log(JSON.stringify(user));
+        console.log(JSON.stringify(tweet));
+        return(
+          <div className="tweetParent">
+            <div className="tweetHeader">
+              <div className="headerAuthor">{user.name}</div>
+              <div className="headerDate">{tweet.created_at}</div>
+            </div>
+            <div className="tweetBody">{tweet.text}</div>
+          </div>
+        )
+      }
+    });
+    
+    var TweetsList = React.createClass({
+      render: function(){
+        var tweetNodes = this.props.data.map(function (tweet){
+          return (
+            <Tweet 
+              tweet={tweet}
+            />
+          );
+        });
+        return (
+          <div className="tweetsList">
+            {tweetNodes}
+          </div>
+        );
+      }
+    });
+    
+    var TweetsContainer = React.createClass({
+      render: function(){
+        var results = this.props.data;
+        if (results.length > 0) {
+          return (
+            <div className="tweetsContainer">
+              <TweetsList data={results} />
+            </div>
+          );
+        } else {
+          return (
+            <div>"Search a user"</div>
+          )
+        }
+      }
+    });
+    
+    React.render(
+      <UserSearch url="/api/get_user" />,
+      document.getElementById('searchContainer')
+    )
+    
+  </script>
+  
 <% else %>
   <p>You must log in to send a tweet.</p>
 <% end %>
