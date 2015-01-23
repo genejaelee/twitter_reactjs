@@ -9,6 +9,8 @@ gem 'unicorn'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+gem 'rails_12factor'
+
 gem 'twitter', '~> 5.3.1'
 gem 'omniauth-twitter', '~> 1.0.1'
 
