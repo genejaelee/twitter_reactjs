@@ -8,14 +8,14 @@ class ApiController < ApplicationController
   def get_parents
     parent_tweet_id = params[:parent_tweet_id]
     # loop through requests up reply chain
-    tweets = get_parents(parent_tweet_id)
+    tweets = get_parent_tweets(parent_tweet_id)
     puts tweets
     render :json => {
       :tweets => tweets
     }
   end
   
-  def get_parents(id)
+  def get_parent_tweets(id)
     client = create_twitter_client
     @id = id
     replies = []

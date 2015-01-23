@@ -1,8 +1,7 @@
-<% if !current_user.nil? %>
+<%= render 'layouts/header' %>
+
+
   <!-- render tweets here -->
-  
-  <div id="searchContainer">
-  </div>
   <div id="content">
   </div>
   
@@ -48,13 +47,33 @@
         var data = this.state.data;
         return(
           <div>
-            <input 
-              className="userSearch"
-              value={value}
-              onKeyDown={this.handleEnter}
-              onChange={this.handleChange}
-            />
+            <div className="searchContainer">
+              <input 
+                className="userSearch"
+                value={value}
+                onKeyDown={this.handleEnter}
+                onChange={this.handleChange}
+              />
+            </div>
             <TweetsContainer data={data} />
+          </div>
+        );
+      }
+    });
+    
+    var TweetsList = React.createClass({
+      render: function(){
+        var tweetNodes = this.props.data.map(function (tweet){
+          return (
+            <Tweet 
+              key={tweet.id}
+              tweet={tweet}
+            />
+          );
+        });
+        return (
+          <div className="tweetsList">
+            {tweetNodes}
           </div>
         );
       }
@@ -63,7 +82,7 @@
     var Tweet = React.createClass({
       getInitialState: function() {
         return {
-          parent: null
+          parents: []
         };
       },
       
@@ -79,8 +98,8 @@
               'parent_tweet_id' : parent_tweet_id,
             },
             success: function(data){
-              console.log('success getting parent tweets ' + data);
-              this.setState({parents: data});
+              console.log('success getting parent tweets ' + data.tweets);
+              this.setState({parents: data.tweets});
             }.bind(this),
               error: function(xhr, status, err) {
               console.error(this.props.url, status, err.toString());
@@ -90,14 +109,16 @@
       },
       
       render: function(){
-        var user = this.props.tweet.user
         var tweet = this.props.tweet
+        var user = tweet.user
+        var date = tweet.created_at
+        var formatted_date = new Date(Date.parse(date)).toLocaleString()
         var reply_id = tweet.in_reply_to_status_id;
         return (
           <div className="tweet" onClick={this.handleClick}>
             <div className="tweetHeader">
-              <div className="headerAuthor">{user.name}</div>
-              <div className="headerDate">{tweet.created_at}</div>
+              <div className="headerElement headerAuthor">{user.name}</div>
+              <div className="headerElement headerDate">{formatted_date}</div>
             </div>
             <div className="tweetBody">{tweet.text}</div>
             <TweetParentsList replies={this.state.parents} />
@@ -115,23 +136,20 @@
           var tweetParentsNodes = parents.map(function (parent){
             return (
               <TweetParent
-                tweet={parent.tweet}
-                author={parent.user}
+                key={parent.id}
+                tweet={parent}
               />
             )
           });
           return (
             <div className="tweetParents">
-              <TweetParent
-                tweet={parent.tweet}
-                author={parent.user}
-              />
+              {tweetParentsNodes}
             </div>
           );
         } else {
           console.log('still no parents');
           return (
-            <div>"no parents"</div>
+            <div className="noParents"></div>
           )
         }
       }
@@ -139,36 +157,19 @@
     
     var TweetParent = React.createClass({
       render: function(){
-        var user = this.props.author
         var tweet = this.props.tweet
-        console.log(JSON.stringify(user));
-        console.log(JSON.stringify(tweet));
+        var user = tweet.user
+        var date = tweet.created_at
+        var formatted_date = new Date(Date.parse(date)).toLocaleString()
         return(
           <div className="tweetParent">
             <div className="tweetHeader">
-              <div className="headerAuthor">{user.name}</div>
-              <div className="headerDate">{tweet.created_at}</div>
+              <div className="headerElement headerAuthor">{user.name}</div>
+              <div className="headerElement headerDate">{formatted_date}</div>
             </div>
             <div className="tweetBody">{tweet.text}</div>
           </div>
         )
-      }
-    });
-    
-    var TweetsList = React.createClass({
-      render: function(){
-        var tweetNodes = this.props.data.map(function (tweet){
-          return (
-            <Tweet 
-              tweet={tweet}
-            />
-          );
-        });
-        return (
-          <div className="tweetsList">
-            {tweetNodes}
-          </div>
-        );
       }
     });
     
@@ -183,7 +184,7 @@
           );
         } else {
           return (
-            <div>"Search a user"</div>
+            <div></div>
           )
         }
       }
@@ -191,11 +192,7 @@
     
     React.render(
       <UserSearch url="/api/get_user" />,
-      document.getElementById('searchContainer')
+      document.getElementById('content')
     )
     
   </script>
-  
-<% else %>
-  <p>You must log in to send a tweet.</p>
-<% end %>

@@ -1,3 +1,67 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+* {
+  font-family: 'Helvetica-Neue', 'Helvetica', 'Arial';
+}
+
+#content {
+  margin: auto;
+  max-width: 800px;
+  
+  .searchContainer {
+    text-align: center;
+    width: 100%;
+    .userSearch {
+      font-size: 22px;
+      margin: auto;
+      text-align: center;
+    }
+  }
+
+  .tweetsContainer {
+    
+    
+    .tweetsList {
+      
+      .tweet {
+        margin-bottom: 20px;
+        font-size: 14px;
+        
+        .tweetHeader {
+          .headerElement {
+            margin-right: 10px;
+            display: inline-block;
+          }
+          
+          .headerAuthor {
+            font-weight: 600;
+            color: #525252;
+          }
+          
+          .headerDate {
+            font-size: 12px;
+          }
+        }
+        
+        .tweetBody {
+          padding: 5px 10px;
+        }
+        
+        .tweetParents {
+          padding: 20px;
+          font-size: 14px;
+          
+          .tweetParent {
+            margin-bottom: 10px;
+          }
+        }
+      }
+      .tweet:hover {
+        cursor: pointer;
+        opacity: 0.5;
+      }
+    }
+  }
+}
