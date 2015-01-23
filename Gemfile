@@ -10,6 +10,7 @@ gem 'unicorn'
 gem 'pg'
 
 gem 'rails_12factor', group: :production
+gem 'newrelic_rpm'
 
 gem 'twitter', '~> 5.3.1'
 gem 'omniauth-twitter', '~> 1.0.1'
