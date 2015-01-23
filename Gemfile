@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.4'
 gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 
+gem 'unicorn'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 
