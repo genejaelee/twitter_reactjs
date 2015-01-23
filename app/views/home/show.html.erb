@@ -25,18 +25,13 @@
       handleEnter: function(e) {
         if (e.which == 13) {
           var username = e.target.value;
+          var json = {'username': username};
           var url = this.props.url;
-          $.ajax({
-            url: url,
-            dataType: 'json',
-            type: 'POST',
-            data: { 'username' : username },
-            success: function(data){
-              this.setState({data: data});
-            }.bind(this),
-              error: function(xhr, status, err) {
-              console.error(this.props.url, status, err.toString());
-            }.bind(this)
+          var _this = this;
+          getUsers(url, json, function(results){
+            _this.setState({
+              data: results
+            });
           });
         }
       },
@@ -88,20 +83,10 @@
       handleClick: function(e) {
         var parent_tweet_id = this.props.tweet.in_reply_to_status_id_str;
         var url = "api/get_parents"
+        var _this = this;
         if (parent_tweet_id) {
-          $.ajax({
-            url: url,
-            dataType: 'json',
-            type: 'POST',
-            data: { 
-              'parent_tweet_id' : parent_tweet_id,
-            },
-            success: function(data){
-              this.setState({parents: data.tweets});
-            }.bind(this),
-              error: function(xhr, status, err) {
-              console.error(this.props.url, status, err.toString());
-            }.bind(this)
+          getParents(url, parent_tweet_id, function(results){
+            _this.setState({parents: results.tweets})
           });
         }
       },
@@ -143,7 +128,6 @@
             </div>
           );
         } else {
-          console.log('still no parents');
           return (
             <div className="noParents"></div>
           )
@@ -185,7 +169,6 @@
         }
       }
     });
-    
     React.render(
       <UserSearch url="/api/get_user" />,
       document.getElementById('content')
